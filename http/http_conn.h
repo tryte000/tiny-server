@@ -68,7 +68,7 @@ private:
     char *url_;
     char *version_;
     char *host_;
-    int content_length;
+    int content_length_;
     bool linger_;
     char *file_address_;
     struct stat file_stat_;
@@ -99,11 +99,11 @@ public:
 private:
     void Init();
     enum HTTP_CODE ProcessRead();
-    bool process_write(enum HTTP_CODE ret);
+    bool ProcessWrite(enum HTTP_CODE ret);
     enum HTTP_CODE ParseRequestLine(char *text);
     enum HTTP_CODE ParseHeaders(char *text);
     enum HTTP_CODE ParseContent(char *text);
-    enum HTTP_CODE DoRequest(char *text);
+    enum HTTP_CODE DoRequest();
     char *GetLine()
     {
         return this->read_buf_ + this->start_line_;
