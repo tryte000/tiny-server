@@ -83,7 +83,9 @@ void WebServer::LogWrite()
             Log::GetInstance()->Init("./ServerLog", this->close_log_, 2000, 800000, 800);
         }
         else
+        {
             Log::GetInstance()->Init("./ServerLog", this->close_log_, 2000, 800000, 0);
+        }
     }
 }
 
@@ -91,7 +93,7 @@ void WebServer::SqlPool()
 {
     // 初始化数据库连接池
     this->conn_pool_ = SqlConnectionPool::GetInstance();
-    this->conn_pool_->init("localhost", this->user_, this->password_,
+    this->conn_pool_->init("127.0.0.1", this->user_, this->password_,
         this->database_name_, 3306, this->sql_num_, this->close_log_);
 
     // 初始化数据库读取表
@@ -134,7 +136,7 @@ void WebServer::EventListen()
     setsockopt(this->listenfd_, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(flag));
     ret = bind(this->listenfd_, (struct sockaddr *)&address, sizeof(address));
     assert(ret >= 0);
-    ret = listen(this->listen_trigmode_, 5);
+    ret = listen(this->listenfd_, 5);
     assert(ret >= 0);
 
     this->utils_.init(TIMESLOT);
@@ -230,7 +232,6 @@ bool WebServer::Dealclinetdata()
         }
         this->Timer(connfd, client_address);
     }
-
     else
     {
         while (1)
@@ -394,7 +395,7 @@ void WebServer::EventLoop()
 {
     bool timeout = false;
     bool stop_server = false;
-
+    
     while (!stop_server)
     {
         int number = epoll_wait(this->epollfd_, this->events_, MAX_EVENT_NUMBER,

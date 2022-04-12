@@ -1,5 +1,7 @@
 #include "sql_connection_pool.h"
 
+SqlConnectionPool *SqlConnectionPool::obj_ = nullptr;
+
 SqlConnectionPool::SqlConnectionPool()
 {
     this->curconn_ = 0;
@@ -92,7 +94,6 @@ MYSQL *SqlConnectionPool::GetConnection()
     ++this->curconn_;
 
     this->lock_.Unlock();
-
     return conn;
 }
 

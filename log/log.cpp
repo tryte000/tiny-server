@@ -5,6 +5,8 @@
 
 using namespace ::std;
 
+Log *Log::instance_ = nullptr;
+
 Log::Log()
 {
     this->count_ = 0;

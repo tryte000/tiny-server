@@ -36,7 +36,9 @@ private:
 
 template <typename T>
 ThreadPool<T>::ThreadPool(int actor_model, SqlConnectionPool *conn_pool,
-    int thread_number = 8, int max_request = 10000)
+    int thread_number, int max_request) : actor_model_(actor_model),
+        thread_number_(thread_number), max_requests_(max_request),
+        threads_(NULL),conn_pool_(conn_pool)
 {
     if (thread_number <= 0 || max_request <= 0)
     {
@@ -137,7 +139,7 @@ void ThreadPool<T>::Run()
                 if (request->ReadOnce())
                 {
                     request->improv_ = 1;
-                    ConnectionRAII mysqlcon(&request->mysqli, this->conn_pool_);
+                    ConnectionRAII mysqlcon(&request->mysql_, this->conn_pool_);
                     request->Process();
                 }
                 else
@@ -161,8 +163,8 @@ void ThreadPool<T>::Run()
         }
         else
         {
-            ConnectionRAII mysqlcon(&request->mysql, this->conn_pool_);
-            requset->Process();
+            ConnectionRAII mysqlcon(&request->mysql_, this->conn_pool_);
+            request->Process();
         }
     }
 }

@@ -9,8 +9,8 @@ class Config
 private:
     /* data */
 public:
-    Config(/* args */);
-    ~Config();
+    Config();
+    ~Config()=default;
 
     void ParseArg(int argc, char *argv[]);
 
@@ -46,4 +46,4 @@ public:
 };
 
 
-#endif
+#endif // TINY_WEBSERVER_CONFIG_H

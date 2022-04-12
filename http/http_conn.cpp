@@ -43,13 +43,17 @@ void HttpConn::InitMysqlResult(SqlConnectionPool *conn_pool)
     ConnectionRAII mysqlconn(&mysql, conn_pool);
 
     // 在user表中检索username，passwd数据，浏览器端输入
-    if (mysql_query(mysql, "SELECT username, passwd FROM USER limit 1"))
+    if (mysql_query(mysql, "SELECT username, passwd FROM user limit 1"))
     {
         LOG_ERROR("SELECT error: %s\n", mysql_error(mysql));
     }
 
     // 从表中检索完整的结果集
     MYSQL_RES *result = mysql_store_result(mysql);
+    if(result == nullptr)
+    {
+        return;
+    }
 
     // 返回结果集中的列数
     int num_fields = mysql_num_fields(result);
@@ -247,7 +251,7 @@ bool HttpConn::ReadOnce()
  */
 HttpConn::HTTP_CODE HttpConn::ParseRequestLine(char *text)
 {
-    this->url_ = strpbrk(text, "\t");
+    this->url_ = strpbrk(text, " \t");
     if (!this->url_)
     {
         return HttpConn::HTTP_CODE::BAD_REQUEST;
@@ -370,7 +374,7 @@ HttpConn::HTTP_CODE HttpConn::ProcessRead()
     char *text = 0;
 
     while ((this->check_state_ == CHECK_STATE_CONTENT && line_status == LINE_OK)
-        || (line_status == this->ParseLine()) == LINE_OK)
+        || ((line_status = this->ParseLine()) == LINE_OK))
     {
         text = this->GetLine();
         this->start_line_ = this->checked_idx_;
@@ -761,6 +765,7 @@ bool HttpConn::ProcessWrite(HTTP_CODE ret)
 void HttpConn::Process()
 {
     HTTP_CODE read_ret = this->ProcessRead();
+    cout << read_ret << endl;
     if (read_ret == NO_REQUEST)
     {
         modfiyfd(this->epollfd_, this->sockfd_, EPOLLIN, this->trigmode_);

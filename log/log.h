@@ -41,6 +41,7 @@ public:
     static void *FlushLogThread(void *args)
     {
         Log::GetInstance()->asyncWriteLog();
+        return nullptr;
     }
 
     bool Init(const char *file_name, int close_log, int log_buf_size = 8192,
@@ -69,8 +70,6 @@ private:
         
     }
 };
-
-Log *Log::instance_ = nullptr;
 
 #define LOG_DEUBG(format, ...) do { \
     if (this->close_log_) \

@@ -74,8 +74,8 @@ public:
     int time_slot_;
 
 public:
-    Utils();
-    ~Utils();
+    Utils()=default;
+    ~Utils()=default;
 
     void init(int timeslot);
 

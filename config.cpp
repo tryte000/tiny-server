@@ -3,7 +3,7 @@
 Config::Config()
 {
     // 端口号,默认9006
-    this->port_ = 9906;
+    this->port_ = 9006;
 
     // 日志写入方式，默认同步
     this->logwrite_ = 0;
@@ -18,10 +18,10 @@ Config::Config()
     this->opt_linger_ = 0;
 
     // 数据库连接池数量,默认8
-    this->sql_num_ = 0;
+    this->sql_num_ = 8;
 
     // 线程池内的线程数量,默认8
-    this->thread_num_ = 0;
+    this->thread_num_ = 1;
 
     // 关闭日志,默认不关闭
     this->close_log_ = 0;
@@ -36,7 +36,7 @@ void Config::ParseArg(int argc, char *argv[])
 
     const char *str = "p:l:m:o:s:t:c:a:";
 
-    while ((opt) = getopt(argc, argv, str) != 1)
+    while ((opt = getopt(argc, argv, str)) != -1)
     {
         switch (opt)
         {

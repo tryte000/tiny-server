@@ -50,9 +50,6 @@ private:
     SqlConnectionPool operator=(const SqlConnectionPool &) = delete;
 };
 
-SqlConnectionPool *SqlConnectionPool::obj_ = nullptr;
-
-
 class ConnectionRAII
 {
 private:
