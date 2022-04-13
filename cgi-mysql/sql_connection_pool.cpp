@@ -21,6 +21,8 @@ SqlConnectionPool *SqlConnectionPool::GetInstance()
         return SqlConnectionPool::obj_;
     }
     return SqlConnectionPool::obj_;
+	// static SqlConnectionPool conn_pool;
+	// return &conn_pool;
 }
 
 /**

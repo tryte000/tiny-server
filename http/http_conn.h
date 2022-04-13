@@ -14,7 +14,7 @@ using namespace std;
 class HttpConn
 {
 public:
-    static const int FILENAME_LEN = 20;
+    static const int FILENAME_LEN = 55;
     static const int READ_BUFFER_SIZE = 2048;
     static const int WRITE_BUFFER_SIZE = 1024;
     enum METHOD 

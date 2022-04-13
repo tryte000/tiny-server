@@ -18,7 +18,7 @@ Config::Config()
     this->opt_linger_ = 0;
 
     // 数据库连接池数量,默认8
-    this->sql_num_ = 8;
+    this->sql_num_ = 1;
 
     // 线程池内的线程数量,默认8
     this->thread_num_ = 1;

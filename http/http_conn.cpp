@@ -443,7 +443,7 @@ HttpConn::HTTP_CODE HttpConn::DoRequest()
         // 将用户名和密码提取出来
         char name[100], passwd[100];
         int i;
-        for (i = 5; this->string_[i] != '&'; i++)
+        for (i = 5; this->string_[i] != '&'; ++i)
         {
             name[i - 5] = this->string_[i];
         }

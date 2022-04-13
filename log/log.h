@@ -36,6 +36,8 @@ public:
             Log::instance_ = new Log();
         }
         return Log::instance_;
+        // static Log instance;
+        // return &instance;
     }
 
     static void *FlushLogThread(void *args)
