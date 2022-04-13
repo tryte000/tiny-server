@@ -75,10 +75,10 @@ void WebServer::TrigMode()
 
 void WebServer::LogWrite()
 {
-    if (0 == this->close_log_)
+    if (this->close_log_ == 0)
     {
         // 初始化日志
-        if (1 == this->log_write_)
+        if (this->log_write_ == 1)
         {
             Log::GetInstance()->Init("./ServerLog", this->close_log_, 2000, 800000, 800);
         }

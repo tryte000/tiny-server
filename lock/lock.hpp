@@ -7,6 +7,9 @@
 
 class Sem
 {
+private:
+    sem_t sem_;
+    
 public:
     Sem()
     {
@@ -38,8 +41,6 @@ public:
     {
         return sem_post(&this->sem_) == 0;
     }
-private:
-    sem_t sem_;
 };
 
 
