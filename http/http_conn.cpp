@@ -66,7 +66,7 @@ void HttpConn::InitMysqlResult(SqlConnectionPool *conn_pool)
     {
         string tmp1(row[0]);
         string tmp2(row[1]);
-        users[tmp1] = users[tmp2];
+        users[tmp1] = tmp2;
     }
 }
 
@@ -443,14 +443,14 @@ HttpConn::HTTP_CODE HttpConn::DoRequest()
         // 将用户名和密码提取出来
         char name[100], passwd[100];
         int i;
-        for (i = 5; this->string_[i] != '&'; ++i)
+        for (i = 5; this->string_[i] != '&'; i++)
         {
             name[i - 5] = this->string_[i];
         }
         name[i - 5] = '\0';
 
         int j = 0;
-        for (i = i + 10; this->string_[i] != '\0'; ++i, ++j)
+        for (i = i + 10; this->string_[i] != '\0'; i++, j++)
         {
             passwd[j] = this->string_[i];
         }
@@ -765,7 +765,6 @@ bool HttpConn::ProcessWrite(HTTP_CODE ret)
 void HttpConn::Process()
 {
     HTTP_CODE read_ret = this->ProcessRead();
-    cout << read_ret << endl;
     if (read_ret == NO_REQUEST)
     {
         modfiyfd(this->epollfd_, this->sockfd_, EPOLLIN, this->trigmode_);

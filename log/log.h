@@ -74,7 +74,7 @@ private:
 };
 
 #define LOG_DEUBG(format, ...) do { \
-    if (this->close_log_) \
+    if (this->close_log_ == 0) \
     { \
         Log::GetInstance()->WriteLog(0, format, ##__VA_ARGS__); \
         Log::GetInstance()->Flush(); \
@@ -82,7 +82,7 @@ private:
 } while(0)
 
 #define LOG_INFO(format, ...) do { \
-    if (this->close_log_) \
+    if (this->close_log_ == 0) \
     { \
         Log::GetInstance()->WriteLog(1, format, ##__VA_ARGS__); \
         Log::GetInstance()->Flush(); \
@@ -90,7 +90,7 @@ private:
 } while(0)
 
 #define LOG_WARN(format, ...) do { \
-    if (this->close_log_) \
+    if (this->close_log_ == 0) \
     { \
         Log::GetInstance()->WriteLog(2, format, ##__VA_ARGS__); \
         Log::GetInstance()->Flush(); \
@@ -98,7 +98,7 @@ private:
 } while(0)
 
 #define LOG_ERROR(format, ...) do { \
-    if (this->close_log_) \
+    if (this->close_log_ == 0) \
     { \
         Log::GetInstance()->WriteLog(3, format, ##__VA_ARGS__); \
         Log::GetInstance()->Flush(); \
